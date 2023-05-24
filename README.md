@@ -26,7 +26,7 @@ Libraries used include:
 Audio Bible streaming from [`Wordpocket`](https://wordpocket.org)
 
 Get a preview at:
-<a href="https://reactive-calculator-two.vercel.app" target="_blank">reactive-calculator-two.vercel.app</a>
+<a href="https://reactive-bible.vercel.app" target="_blank">reactive-bible.vercel.app</a>
 
 ![alt text](https://github.com/realvincentuche/reactive-bible/blob/928ba523de0697e13a23030b2b9bd3295bbc0dc8/public/reactive-bible.png)
 
