@@ -1,4 +1,4 @@
-# Reactive Bible
+# <img src="https://github.com/realvincentuche/reactive-bible/blob/e5236e18b12fced36c379a71dcf9597960986c68/public/icon.svg" alt="Logo" height="30" /> Reactive Bible
 
 This is a [Reactjs](https://react.dev/) project bootstrapped with [`Vitejs`](https://vitejs.dev).
 
