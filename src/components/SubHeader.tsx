@@ -4,8 +4,11 @@ import {
   IconArrowRight,
   IconSearch,
 } from "@tabler/icons-react";
+import { Button } from "@mantine/core";
 import { useBibleStore } from "../store";
+import { useState } from "react";
 import { getPassage } from "../api";
+import AddTagNoteModal from "./AddTagNoteModal";
 import Audio from "./Audio";
 
 const SubHeader = ({ open }: { open: () => void }) => {
@@ -16,6 +19,7 @@ const SubHeader = ({ open }: { open: () => void }) => {
   const setActiveBookShort = useBibleStore((state) => state.setActiveBookShort);
   const setActiveChapter = useBibleStore((state) => state.setActiveChapter);
   const getPassageResult = getPassage();
+  const [opened, setOpened] = useState(false);
   const checkNext = (): number | null => {
     const index = getPassageResult.findIndex(
       (book) => book.book_name === activeBook && book.chapter === activeChapter
@@ -77,6 +81,10 @@ const SubHeader = ({ open }: { open: () => void }) => {
       <Title order={4}>
         {activeBookShort} {activeChapter}
       </Title>
+      <Button onClick={() => setOpened(true)}>Add Tag Note</Button>
+      {opened && (
+        <AddTagNoteModal opened={opened} onClose={() => setOpened(false)} />
+      )}
       <Audio />
       <ActionIcon
         variant="transparent"
