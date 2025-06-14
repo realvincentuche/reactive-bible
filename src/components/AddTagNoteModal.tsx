@@ -14,10 +14,11 @@ const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
   const setTagNoteText = useBibleStore((state) => state.setTagNoteText);
   const addTagNote = useBibleStore((state) => state.addTagNote);
   const titles = useBibleStore((state) => ["Title 1", "Title 2", "Title 3"]);
+  const selectedVerses = useBibleStore((state) => state.selectedVerses);/*  */
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    addTagNote(tagNoteTitle, tagNoteText);
+    addTagNote(tagNoteTitle, tagNoteText, selectedVerses);
     onClose();
   };
 
@@ -27,7 +28,7 @@ const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
         <Select
           label="Tag Note Title"
           value={tagNoteTitle}
-          onChange={(event) => setTagNoteTitle(event.currentTarget.value)}
+          onChange={(item) => setTagNoteTitle(item)}
           data={titles}
         />
         <TextInput

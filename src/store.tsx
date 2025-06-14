@@ -15,7 +15,12 @@ interface BibleState {
   setActiveVerses: (activeVerses: number[]) => void;
   setTagNoteTitle: (tagNoteTitle: string) => void;
   setTagNoteText: (tagNoteText: string) => void;
-  addTagNote: (tagNoteTitle: string, tagNoteText: string) => void;
+  addTagNote: (
+    tagNoteTitle: string,
+    tagNoteText: string,
+    selectedVerses: any
+  ) => void;
+  selectedVerses: number[];
 }
 
 export const useBibleStore = create<BibleState>()(
@@ -27,6 +32,7 @@ export const useBibleStore = create<BibleState>()(
       activeVerses: [1],
       tagNoteTitle: "",
       tagNoteText: "",
+      selectedVerses: [],
       setActiveBook: (activeBook) => set({ activeBook, activeChapter: 1 }),
       setActiveBookOnly: (activeBook) => set({ activeBook }),
       setActiveBookShort: (activeBookShort) => set({ activeBookShort }),
@@ -41,10 +47,10 @@ export const useBibleStore = create<BibleState>()(
       },
       setTagNoteTitle: (tagNoteTitle) => set({ tagNoteTitle }),
       setTagNoteText: (tagNoteText) => set({ tagNoteText }),
-      addTagNote: (tagNoteTitle, tagNoteText) => {
-        // Handle adding tag note here
+      addTagNote: (tagNoteTitle, tagNoteText, selectedVerses) => {
         console.log("Tag Note Title:", tagNoteTitle);
         console.log("Tag Note Text:", tagNoteText);
+        console.log("Selected Verses:", selectedVerses);
       },
     }),
     {
