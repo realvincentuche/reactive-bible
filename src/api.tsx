@@ -81,3 +81,31 @@ export const getPassage = (): {
     chapter: number;
   }[];
 };
+
+export const addTagNote = async (tagNoteTitle: string, tagNoteText: string, activeVerses: number[]) => {
+    const body = JSON.stringify({
+        title: tagNoteTitle,
+        text: tagNoteText,
+        verses: activeVerses,
+      })
+    
+    console.log("body:\n", body)
+
+    // try {
+    //   const response = await fetch('/api/tags', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       title: tagNoteTitle,
+    //       text: tagNoteText,
+    //       verses: activeVerses,
+    //     }),
+    //   });
+    //   const data = await response.json();
+    //   return data;
+    // } catch (error) {
+    //   console.error(error);
+    // }
+  };
