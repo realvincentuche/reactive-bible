@@ -9,6 +9,7 @@ const Passage = ({ open }: { open: () => void  }) => {
   const viewport = useRef<HTMLDivElement>(null);
   const activeBook = useBibleStore((state) => state.activeBook);
   const activeChapter = useBibleStore((state) => state.activeChapter);
+  const bibleVersion = useBibleStore((state) => state.bibleVersion);
   return (
     <Box style={{ flex: "1 0 100%" }}>
       <SubHeader open={open} />
@@ -21,7 +22,7 @@ const Passage = ({ open }: { open: () => void  }) => {
         h="80vh"
       >
         <ScrollArea h="80vh" viewportRef={viewport}>
-          {getVersesInChapter(activeBook, activeChapter).map(
+          {getVersesInChapter(activeBook, activeChapter, bibleVersion).map(
             ({ verse, text }) => (
               <Verse verse={verse} key={verse} text={text} />
             )
