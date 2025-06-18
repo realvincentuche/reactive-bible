@@ -72,16 +72,29 @@ export const getVersesInKjvChapter = (
     .map((book: KjvBook) => ({ verse: book.verse, text: book.text }));
 };
 
-export const getVersesInEsvChapter = (
+export const getVersesInEsvChapter = async (
   thebook: string,
   thechapter: number
-): { verse: number; text: string }[] => {
-  console.log("Getting verses from ESV")
-  return data
-    .filter(
-      (book: KjvBook) => book.book_name === thebook && book.chapter === thechapter
-    )
-    .map((book: KjvBook) => ({ verse: book.verse, text: book.text }));
+): Promise<{ verse: number; text: string }[]> => {
+  console.log("Getting verses from ESV:\n", thebook, thechapter);
+  try {
+    const passage = `${thebook} ${thechapter}`;
+    const url = `https://tedisrozenfelds.vercel.app/bible/verses?passage=${passage}`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+    const verses = data.verses.passages
+    console.log(verses);
+    return verses;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 export const getPassage = (): {
