@@ -47,15 +47,15 @@ export const getVerses = (thebook: string, thechapter: number): number[] => {
     .map((book: KjvBook) => book.verse);
 };
 
-export const getVersesInChapter = (
+export const getVersesInChapter = async (
   thebook: string,
   thechapter: number,
   bibleVersion: string
-): { verse: number; text: string }[] => {
+): Promise<{ verse: number; text: string }[]> => {
   if (bibleVersion === 'KJV') {
     return getVersesInKjvChapter(thebook, thechapter);
   } else if (bibleVersion === 'ESV') {
-    return getVersesInEsvChapter(thebook, thechapter);
+    return await getVersesInEsvChapter(thebook, thechapter);
   } else {
     throw new Error(`Unsupported Bible version: ${bibleVersion}`);
   }
@@ -76,7 +76,6 @@ export const getVersesInEsvChapter = async (
   thebook: string,
   thechapter: number
 ): Promise<{ verse: number; text: string }[]> => {
-  console.log("Getting verses from ESV:\n", thebook, thechapter);
   try {
     const passage = `${thebook} ${thechapter}`;
     const url = `https://tedisrozenfelds.vercel.app/bible/verses?passage=${passage}`;
@@ -88,9 +87,9 @@ export const getVersesInEsvChapter = async (
     });
 
     const data = await response.json();
-    const verses = data.verses.passages
-    console.log(verses);
-    return verses;
+
+    const verses = data.verses
+  return Promise.resolve(verses.map((verse) => ({ verse: verse.verse, text: verse.text })));
   } catch (error) {
     console.error(error);
     throw error;
