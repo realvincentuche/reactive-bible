@@ -12,7 +12,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { IconMoonStars, IconSun } from "@tabler/icons-react";
-import BibleVersionToggle from './BibleVersionToggle';
+import { BibleVersionToggle } from './BibleVersionToggle';
 import { SearchControl } from "./SearchControl";
 
 const MyHeader = ({

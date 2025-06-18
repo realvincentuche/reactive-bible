@@ -1,7 +1,7 @@
 import { Button, useMantineTheme } from '@mantine/core';
 import { useBibleStore } from '../store';
 
-const BibleVersionToggle = () => {
+export function BibleVersionToggle() {
   const { bibleVersion, setBibleVersion } = useBibleStore((state) => ({
     bibleVersion: state.bibleVersion,
     setBibleVersion: state.setBibleVersion,
@@ -21,6 +21,4 @@ const BibleVersionToggle = () => {
       {bibleVersion === 'KJV' ? 'KJV' : 'ESV'}
     </Button>
   );
-};
-
-export default BibleVersionToggle;
+}
