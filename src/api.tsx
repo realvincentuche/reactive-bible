@@ -82,30 +82,28 @@ export const getPassage = (): {
   }[];
 };
 
-export const addTagNote = async (tagNoteTitle: string, tagNoteText: string, activeVerses: number[]) => {
+export const addTagNote = async (
+  tagNoteTitle: string,
+  tagNoteText: string,
+  verseReferences: { book: string; chapter: number; verse: number }[]
+) => {
     const body = JSON.stringify({
-        title: tagNoteTitle,
-        text: tagNoteText,
-        verses: activeVerses,
+        tag: tagNoteTitle,
+        note_text: tagNoteText,
+        verse_references: verseReferences,
       })
-    
-    console.log("body:\n", body)
 
-    // try {
-    //   const response = await fetch('/api/tags', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //       title: tagNoteTitle,
-    //       text: tagNoteText,
-    //       verses: activeVerses,
-    //     }),
-    //   });
-    //   const data = await response.json();
-    //   return data;
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/v1/notes/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body,
+      });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
   };

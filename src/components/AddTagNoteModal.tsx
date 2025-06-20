@@ -13,15 +13,23 @@ const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
   const setTagNoteTitle = useBibleStore((state) => state.setTagNoteTitle);
   const setTagNoteText = useBibleStore((state) => state.setTagNoteText);
   const activeVerses = useBibleStore((state) => state.activeVerses);
-  const titles = ["Title 1", "Title 2", "Title 3"]
+  const activeBook = useBibleStore((state) => state.activeBook);
+  const activeChapter = useBibleStore((state) => state.activeChapter);
+  const titles = ["TAG9EB8F0ABC2454FC", "TAG7BFDDCD8A94E416", "TAGEFF4B88401074BE"]
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("Tag Note Title:", tagNoteTitle);
     console.log("Tag Note Text:", tagNoteText);
     console.log("Selected Verses:", activeVerses);
+
+    const verseReferences = activeVerses.map((verse) => ({
+      book: activeBook,
+      chapter: activeChapter,
+      verse,
+    }));
     try {
-      const data = await addTagNote(tagNoteTitle, tagNoteText, activeVerses);
+      const data = await addTagNote(tagNoteTitle, tagNoteText, verseReferences);
       console.log('Tag note added:', data);
       onClose();
     } catch (error) {
