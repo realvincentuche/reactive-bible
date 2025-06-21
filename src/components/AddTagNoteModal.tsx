@@ -9,7 +9,7 @@ interface AddTagNoteModalProps {
 }
 
 const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
-  const [tagNoteTitle, setTagNoteTitle] = useState('');
+  const [tagId, setTagId] = useState('');
   const [tagNoteText, setTagNoteText] = useState('');
   const activeVerses = useBibleStore((state) => state.activeVerses);
   const activeBook = useBibleStore((state) => state.activeBook);
@@ -18,7 +18,7 @@ const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Tag Note Title:", tagNoteTitle);
+    console.log("Tag ID:", tagId);
     console.log("Tag Note Text:", tagNoteText);
     console.log("Selected Verses:", activeVerses);
 
@@ -28,7 +28,7 @@ const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
       verse,
     }));
     try {
-      const data = await addTagNote(tagNoteTitle, tagNoteText, verseReferences);
+      const data = await addTagNote(tagId, tagNoteText, verseReferences);
       console.log('Tag note added:', data);
       onClose();
     } catch (error) {
@@ -41,8 +41,8 @@ const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
       <form onSubmit={handleSubmit}>
         <Select
           label="Tag"
-          value={tagNoteTitle}
-          onChange={(item) => setTagNoteTitle(item)}
+          value={tagId}
+          onChange={(item) => setTagId(item)}
           data={tags}
         />
         <TextInput
