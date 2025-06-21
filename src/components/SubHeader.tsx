@@ -81,7 +81,12 @@ const SubHeader = ({ open }: { open: () => void }) => {
       <Title order={4}>
         {activeBookShort} {activeChapter}
       </Title>
-      <Button onClick={() => setOpened(true)}>Add Tag Note</Button>
+      <Button
+        onClick={() => window.open("http://127.0.0.1:8000/api/v1/notes/", "_blank")}
+      >
+        Notes
+      </Button>
+      <Button onClick={() => setOpened(true)}>Tag</Button>
       {opened && (
         <AddTagNoteModal opened={opened} onClose={() => setOpened(false)} />
       )}
