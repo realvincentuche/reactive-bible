@@ -6,8 +6,6 @@ interface BibleState {
   activeBookShort: string;
   activeChapter: number;
   activeVerses: number[];
-  tagNoteTitle: string;
-  tagNoteText: string;
   setActiveBook: (activeBook: string) => void;
   setActiveBookOnly: (activeBook: string) => void;
   setActiveBookShort: (activeBookShort: string) => void;
@@ -23,8 +21,6 @@ export const useBibleStore = create<BibleState>()(
       activeBookShort: "Gen",
       activeChapter: 1,
       activeVerses: [1],
-      tagNoteTitle: "",
-      tagNoteText: "",
       selectedVerses: [],
       setActiveBook: (activeBook) => set({ activeBook, activeChapter: 1 }),
       setActiveBookOnly: (activeBook) => set({ activeBook }),
