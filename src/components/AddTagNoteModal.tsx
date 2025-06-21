@@ -1,7 +1,7 @@
 import { Modal, Button, Select, TextInput } from "@mantine/core";
 import { addTagNote } from '../api';
 import { useBibleStore } from "../store";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface AddTagNoteModalProps {
   opened: boolean;
@@ -9,18 +9,29 @@ interface AddTagNoteModalProps {
 }
 
 const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
-  const [tagId, setTagId] = useState('');
+  const [tags, setTags] = useState([]);
+  const [selectedTagId, setSelectedTagId] = useState('');
+  const [selectedTagName, setSelectedTagName] = useState('');
   const [tagNoteText, setTagNoteText] = useState('');
   const activeVerses = useBibleStore((state) => state.activeVerses);
   const activeBook = useBibleStore((state) => state.activeBook);
   const activeChapter = useBibleStore((state) => state.activeChapter);
-  const tags = ["TAG9EB8F0ABC2454FC", "TAG7BFDDCD8A94E416", "TAGEFF4B88401074BE"]
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/v1/tags/');
+        const data = await response.json();
+        setTags(data.map((item, index) => ({ id: item.id, name: item.name, key: index })));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchTags();
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Tag ID:", tagId);
-    console.log("Tag Note Text:", tagNoteText);
-    console.log("Selected Verses:", activeVerses);
 
     const verseReferences = activeVerses.map((verse) => ({
       book: activeBook,
@@ -28,7 +39,7 @@ const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
       verse,
     }));
     try {
-      const data = await addTagNote(tagId, tagNoteText, verseReferences);
+      const data = await addTagNote(selectedTagId, tagNoteText, verseReferences);
       console.log('Tag note added:', data);
       onClose();
     } catch (error) {
@@ -41,9 +52,12 @@ const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
       <form onSubmit={handleSubmit}>
         <Select
           label="Tag"
-          value={tagId}
-          onChange={(item) => setTagId(item)}
-          data={tags}
+          value={selectedTagName}
+          onChange={(item) => {
+            setSelectedTagId(tags.find(tag => tag.name === item).id);
+            setSelectedTagName(item)
+          }}
+          data={tags.map(tag => tag.name)}
         />
         <TextInput
           label="Note"
