@@ -1,9 +1,5 @@
 import { ActionIcon, Box, Title, rem } from "@mantine/core";
-import {
-  IconArrowLeft,
-  IconArrowRight,
-  IconSearch,
-} from "@tabler/icons-react";
+import { IconArrowLeft, IconArrowRight, IconSearch } from "@tabler/icons-react";
 import { Button } from "@mantine/core";
 import { useBibleStore } from "../store";
 import { useState } from "react";
@@ -82,11 +78,19 @@ const SubHeader = ({ open }: { open: () => void }) => {
         {activeBookShort} {activeChapter}
       </Title>
       <Button
-        onClick={() => window.open("https://bible-research.vercel.app/api/v1/notes/", "_blank")}
+        variant="transparent"
+        onClick={() =>
+          window.open(
+            "https://bible-research.vercel.app/api/v1/notes/",
+            "_blank"
+          )
+        }
       >
         Notes
       </Button>
-      <Button onClick={() => setOpened(true)}>Tag</Button>
+      <Button variant="transparent" onClick={() => setOpened(true)}>
+        Tag
+      </Button>
       {opened && (
         <AddTagNoteModal opened={opened} onClose={() => setOpened(false)} />
       )}
