@@ -82,7 +82,7 @@ const SubHeader = ({ open }: { open: () => void }) => {
         {activeBookShort} {activeChapter}
       </Title>
       <Button
-        onClick={() => window.open("http://127.0.0.1:8000/api/v1/notes/", "_blank")}
+        onClick={() => window.open("https://bible-research.vercel.app/api/v1/notes/", "_blank")}
       >
         Notes
       </Button>
