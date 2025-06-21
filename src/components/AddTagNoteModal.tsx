@@ -1,6 +1,7 @@
 import { Modal, Button, Select, TextInput } from "@mantine/core";
 import { addTagNote } from '../api';
 import { useBibleStore } from "../store";
+import { useState } from 'react';
 
 interface AddTagNoteModalProps {
   opened: boolean;
@@ -8,14 +9,12 @@ interface AddTagNoteModalProps {
 }
 
 const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
-  const tagNoteTitle = useBibleStore((state) => state.tagNoteTitle);
-  const tagNoteText = useBibleStore((state) => state.tagNoteText);
-  const setTagNoteTitle = useBibleStore((state) => state.setTagNoteTitle);
-  const setTagNoteText = useBibleStore((state) => state.setTagNoteText);
+  const [tagNoteTitle, setTagNoteTitle] = useState('');
+  const [tagNoteText, setTagNoteText] = useState('');
   const activeVerses = useBibleStore((state) => state.activeVerses);
   const activeBook = useBibleStore((state) => state.activeBook);
   const activeChapter = useBibleStore((state) => state.activeChapter);
-  const titles = ["TAG9EB8F0ABC2454FC", "TAG7BFDDCD8A94E416", "TAGEFF4B88401074BE"]
+  const tags = ["TAG9EB8F0ABC2454FC", "TAG7BFDDCD8A94E416", "TAGEFF4B88401074BE"]
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,13 +40,13 @@ const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
     <Modal opened={opened} onClose={onClose} title="Tag">
       <form onSubmit={handleSubmit}>
         <Select
-          label="Tag Note Title"
+          label="Tag"
           value={tagNoteTitle}
           onChange={(item) => setTagNoteTitle(item)}
-          data={titles}
+          data={tags}
         />
         <TextInput
-          label="Tag Note Text"
+          label="Note"
           value={tagNoteText}
           onChange={(event) => setTagNoteText(event.currentTarget.value)}
         />

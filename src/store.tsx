@@ -13,8 +13,6 @@ interface BibleState {
   setActiveBookShort: (activeBookShort: string) => void;
   setActiveChapter: (activeChapter: number) => void;
   setActiveVerses: (activeVerses: number[]) => void;
-  setTagNoteTitle: (tagNoteTitle: string) => void;
-  setTagNoteText: (tagNoteText: string) => void;
   selectedVerses: number[];
 }
 
@@ -40,8 +38,6 @@ export const useBibleStore = create<BibleState>()(
             ?.scrollIntoView({ block: "center", behavior: "smooth" });
         });
       },
-      setTagNoteTitle: (tagNoteTitle) => set({ tagNoteTitle }),
-      setTagNoteText: (tagNoteText) => set({ tagNoteText }),
     }),
     {
       name: "bible-storage",
