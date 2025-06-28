@@ -81,7 +81,7 @@ export function SearchModal({
           setActiveBook(item.book_name);
           setActiveBookShort(item.book_id);
           setActiveChapter(item.chapter);
-          setActiveVerses(item.verse);
+          setActiveVerses([item.verse]);
           close();
         }}
       />
