@@ -43,15 +43,15 @@ export default function App() {
         <AppShell
           padding="md"
           navbar={<MyNavbar opened={opened} setOpened={setOpened} />}
-        //   header={
-        //     <MyHeader
-        //       colorScheme={colorScheme}
-        //       toggleColorScheme={toggleColorScheme}
-        //       opened={opened}
-        //       setOpened={setOpened}
-        //       open={modalFn.open}
-        //     />
-        //   }
+          header={
+            <MyHeader
+              colorScheme={colorScheme}
+              toggleColorScheme={toggleColorScheme}
+              opened={opened}
+              setOpened={setOpened}
+              open={modalFn.open}
+            />
+          }
           styles={(theme) => ({
             main: {
               backgroundColor:
