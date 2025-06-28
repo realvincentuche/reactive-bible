@@ -9,7 +9,7 @@ interface AddTagNoteModalProps {
 }
 
 const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState<{ id: string; name: string; key: number }[]>([]);
   const [selectedTagId, setSelectedTagId] = useState("");
   const [selectedTagName, setSelectedTagName] = useState("");
   const [tagNoteText, setTagNoteText] = useState("");
@@ -25,7 +25,7 @@ const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
         );
         const data = await response.json();
         setTags(
-          data.map((item, index) => ({
+          data.map((item: { id: any; name: any; }, index: any) => ({
             id: item.id,
             name: item.name,
             key: index,
@@ -71,8 +71,9 @@ const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
           variant="transparent"
           label="Tag"
           value={selectedTagName}
-          onChange={(item) => {
-            setSelectedTagId(tags.find((tag) => tag.name === item).id);
+          onChange={(item: string) => {
+            const tagId = tags.find((tag) => tag.name === item)?.id;
+            setSelectedTagId(tagId ?? '');
             setSelectedTagName(item);
           }}
           data={tags.map((tag) => tag.name)}
