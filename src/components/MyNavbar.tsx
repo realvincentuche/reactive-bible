@@ -55,11 +55,11 @@ const MyNavbar = ({
   const { classes, cx } = useStyles();
   const activeBook = useBibleStore((state) => state.activeBook);
   const activeChapter = useBibleStore((state) => state.activeChapter);
-  const activeVerse = useBibleStore((state) => state.activeVerse);
+  const activeVerses = useBibleStore((state) => state.activeVerses);
   const setActiveBook = useBibleStore((state) => state.setActiveBook);
   const setActiveBookShort = useBibleStore((state) => state.setActiveBookShort);
   const setActiveChapter = useBibleStore((state) => state.setActiveChapter);
-  const setActiveVerse = useBibleStore((state) => state.setActiveVerse);
+  const setActiveVerses = useBibleStore((state) => state.setActiveVerses);
 
   return (
     <Navbar
@@ -119,12 +119,12 @@ const MyNavbar = ({
             {getVerses(activeBook, activeChapter).map((verse) => (
               <a
                 className={cx(classes.link, {
-                  [classes.linkActive]: activeVerse === verse,
+                  [classes.linkActive]: activeVerses.includes(verse),
                 })}
                 href="/"
                 onClick={(event) => {
                   event.preventDefault();
-                  setActiveVerse(verse);
+                  setActiveVerses([verse]);
                   setOpened(false);
                 }}
                 key={verse}

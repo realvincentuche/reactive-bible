@@ -10,8 +10,9 @@ A Reactive Bible App developed with Reactjs & Mantine. Features include:
 - Bible verse scroll-to-view feature.
 - Offline Bible passages.
 - Online Audio Bible.
+- Verse tagging.
 - Book, Chapter & Verse Navigation.
-- Prev & Next Chapter navigation. 
+- Prev & Next Chapter navigation.
 - Detailed tests included using react testing library and vitest.
 - And lots more.
 

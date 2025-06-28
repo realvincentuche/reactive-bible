@@ -5,12 +5,13 @@ interface BibleState {
   activeBook: string;
   activeBookShort: string;
   activeChapter: number;
-  activeVerse: number;
+  activeVerses: number[];
   setActiveBook: (activeBook: string) => void;
   setActiveBookOnly: (activeBook: string) => void;
   setActiveBookShort: (activeBookShort: string) => void;
   setActiveChapter: (activeChapter: number) => void;
-  setActiveVerse: (activeVerse: number) => void;
+  setActiveVerses: (activeVerses: number[]) => void;
+  selectedVerses: number[];
 }
 
 export const useBibleStore = create<BibleState>()(
@@ -19,16 +20,19 @@ export const useBibleStore = create<BibleState>()(
       activeBook: "Genesis",
       activeBookShort: "Gen",
       activeChapter: 1,
-      activeVerse: 1,
+      activeVerses: [1],
+      selectedVerses: [],
       setActiveBook: (activeBook) => set({ activeBook, activeChapter: 1 }),
       setActiveBookOnly: (activeBook) => set({ activeBook }),
       setActiveBookShort: (activeBookShort) => set({ activeBookShort }),
       setActiveChapter: (activeChapter) => set({ activeChapter }),
-      setActiveVerse: (activeVerse) => {
-        set({ activeVerse });
-        document
-          .getElementById("verse-" + activeVerse)
-          ?.scrollIntoView({ block: "center", behavior: "smooth" });
+      setActiveVerses: (activeVerses) => {
+        set({ activeVerses });
+        activeVerses.forEach((verse) => {
+          document
+            .getElementById("verse-" + verse)
+            ?.scrollIntoView({ block: "center", behavior: "smooth" });
+        });
       },
     }),
     {
