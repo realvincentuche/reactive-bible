@@ -20,7 +20,7 @@ import {
 import { IconPlus, IconEdit, IconTrash, IconSearch } from '@tabler/icons-react';
 import { useBibleStore } from '../store';
 
-// Type definitions based on your data structure
+
 interface Verse {
   id: string;
   book: string;
@@ -65,25 +65,24 @@ interface UpdateNoteRequest {
   }>;
 }
 
-// API functions
+
 const API_BASE_URL = 'https://bible-research.vercel.app/api/v1';
 
 const noteAPI = {
-  // Get all notes
   getAllNotes: async (): Promise<Note[]> => {
     const response = await fetch(`${API_BASE_URL}/notes/`);
     if (!response.ok) throw new Error('Failed to fetch notes');
     return response.json();
   },
 
-  // Get note by ID
+
   getNote: async (id: string): Promise<Note> => {
     const response = await fetch(`${API_BASE_URL}/notes/${id}/`);
     if (!response.ok) throw new Error('Failed to fetch note');
     return response.json();
   },
 
-  // Create new note
+
   createNote: async (noteData: CreateNoteRequest): Promise<Note> => {
     const response = await fetch(`${API_BASE_URL}/notes/`, {
       method: 'POST',
@@ -96,7 +95,7 @@ const noteAPI = {
     return response.json();
   },
 
-  // Update note
+
   updateNote: async (id: string, noteData: UpdateNoteRequest): Promise<Note> => {
     const response = await fetch(`${API_BASE_URL}/notes/${id}/`, {
       method: 'PUT',
@@ -109,7 +108,6 @@ const noteAPI = {
     return response.json();
   },
 
-  // Delete note
   deleteNote: async (id: string): Promise<void> => {
     const response = await fetch(`${API_BASE_URL}/notes/${id}/`, {
       method: 'DELETE',
@@ -117,7 +115,6 @@ const noteAPI = {
     if (!response.ok) throw new Error('Failed to delete note');
   },
 
-  // Get all tags
   getAllTags: async (): Promise<Tag[]> => {
     const response = await fetch(`${API_BASE_URL}/tags/`);
     if (!response.ok) throw new Error('Failed to fetch tags');
@@ -150,6 +147,48 @@ const NoteManager: React.FC = () => {
     loadNotes();
     loadTags();
   }, []);
+
+  function formatVerseRanges(verses: Verse[]): string[] {
+  if (!verses.length) return [];
+
+  const sorted = [...verses].sort((a, b) =>
+    a.chapter === b.chapter ? a.verse - b.verse : a.chapter - b.chapter
+  );
+
+  const result: string[] = [];
+  let start = sorted[0];
+  let end = sorted[0];
+
+  for (let i = 1; i < sorted.length; i++) {
+    const current = sorted[i];
+    const isSameBookAndChapter = current.book === end.book && current.chapter === end.chapter;
+    const isNextVerse = current.verse === end.verse + 1;
+
+    if (isSameBookAndChapter && isNextVerse) {
+      end = current;
+    } else {
+      result.push(formatRange(start, end));
+      start = current;
+      end = current;
+    }
+  }
+
+  result.push(formatRange(start, end));
+  return result;
+}
+
+function formatRange(start: Verse, end: Verse): string {
+  if (start.book !== end.book || start.chapter !== end.chapter) {
+    return `${start.book} ${start.chapter}:${start.verse} – ${end.book} ${end.chapter}:${end.verse}`;
+  }
+
+  if (start.verse === end.verse) {
+    return `${start.book} ${start.chapter}:${start.verse}`;
+  }
+
+  return `${start.book} ${start.chapter}:${start.verse}-${end.verse}`;
+}
+
 
   useEffect(() => {
     if (activeBook && activeChapter) {
@@ -338,15 +377,14 @@ const NoteManager: React.FC = () => {
                   )}
                   
                   {note.verses.length > 0 && (
-                    <Group spacing="xs" mb="xs">
-                      {note.verses.map((verse, index) => (
-                        <Badge key={index} variant="outline" size="sm">
-                          {verse.book} {verse.chapter}:{verse.verse}
-                        </Badge>
-                      ))}
-                    </Group>
-                  )}
-                  
+                  <Group spacing="xs" mb="xs">
+                    {formatVerseRanges(note.verses).map((range, index) => (
+                      <Badge key={index} variant="outline" size="sm">
+                        {range}
+                      </Badge>
+                    ))}
+                  </Group>
+                )}                
                   <Text size="xs" c="dimmed">
                     Created: {new Date(note.created_at).toLocaleDateString()}
                   </Text>
