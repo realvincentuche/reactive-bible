@@ -71,21 +71,21 @@ const API_BASE_URL = 'https://bible-research.vercel.app/api/v1';
 const noteAPI = {
   // Get all notes
   getAllNotes: async (): Promise<Note[]> => {
-    const response = await fetch(`${API_BASE_URL}/notes`);
+    const response = await fetch(`${API_BASE_URL}/notes/`);
     if (!response.ok) throw new Error('Failed to fetch notes');
     return response.json();
   },
 
   // Get note by ID
   getNote: async (id: string): Promise<Note> => {
-    const response = await fetch(`${API_BASE_URL}/notes/${id}`);
+    const response = await fetch(`${API_BASE_URL}/notes/${id}/`);
     if (!response.ok) throw new Error('Failed to fetch note');
     return response.json();
   },
 
   // Create new note
   createNote: async (noteData: CreateNoteRequest): Promise<Note> => {
-    const response = await fetch(`${API_BASE_URL}/notes`, {
+    const response = await fetch(`${API_BASE_URL}/notes/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const noteAPI = {
 
   // Update note
   updateNote: async (id: string, noteData: UpdateNoteRequest): Promise<Note> => {
-    const response = await fetch(`${API_BASE_URL}/notes/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/notes/${id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ const noteAPI = {
 
   // Delete note
   deleteNote: async (id: string): Promise<void> => {
-    const response = await fetch(`${API_BASE_URL}/notes/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/notes/${id}/`, {
       method: 'DELETE',
     });
     if (!response.ok) throw new Error('Failed to delete note');
@@ -119,7 +119,7 @@ const noteAPI = {
 
   // Get all tags
   getAllTags: async (): Promise<Tag[]> => {
-    const response = await fetch(`${API_BASE_URL}/tags`);
+    const response = await fetch(`${API_BASE_URL}/tags/`);
     if (!response.ok) throw new Error('Failed to fetch tags');
     return response.json();
   },

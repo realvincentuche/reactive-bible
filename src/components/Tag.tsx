@@ -39,19 +39,19 @@ const API_BASE_URL = 'https://bible-research.vercel.app/api/v1';
 
 const tagAPI = {
   getAllTags: async (): Promise<Tag[]> => {
-    const response = await fetch(`${API_BASE_URL}/tags`);
+    const response = await fetch(`${API_BASE_URL}/tags/`);
     if (!response.ok) throw new Error('Failed to fetch tags');
     return response.json();
   },
 
   getTag: async (id: string): Promise<Tag> => {
-    const response = await fetch(`${API_BASE_URL}/tags/${id}`);
+    const response = await fetch(`${API_BASE_URL}/tags/${id}/`);
     if (!response.ok) throw new Error('Failed to fetch tag');
     return response.json();
   },
 
   createTag: async (tagData: CreateTagRequest): Promise<Tag> => {
-    const response = await fetch(`${API_BASE_URL}/tags`, {
+    const response = await fetch(`${API_BASE_URL}/tags/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ const tagAPI = {
   },
 
   updateTag: async (id: string, tagData: UpdateTagRequest): Promise<Tag> => {
-    const response = await fetch(`${API_BASE_URL}/tags/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/tags/${id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ const tagAPI = {
   },
 
   deleteTag: async (id: string): Promise<void> => {
-    const response = await fetch(`${API_BASE_URL}/tags/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/tags/${id}/`, {
       method: 'DELETE',
     });
     if (!response.ok) throw new Error('Failed to delete tag');
