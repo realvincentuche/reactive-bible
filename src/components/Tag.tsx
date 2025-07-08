@@ -62,7 +62,6 @@ const tagAPI = {
     return response.json();
   },
 
-
   updateTag: async (id: string, tagData: UpdateTagRequest): Promise<Tag> => {
     const response = await fetch(`${API_BASE_URL}/tags/${id}`, {
       method: 'PUT',
@@ -201,7 +200,7 @@ const TagManager: React.FC = () => {
   };
 
   const parentTagOptions = tags
-    .filter(tag => tag.parent_tag === null) // Only root tags can be parents
+    .filter(tag => tag.parent_tag === null) 
     .map(tag => ({
       value: tag.id,
       label: tag.name,
@@ -217,10 +216,10 @@ const TagManager: React.FC = () => {
         </Alert>
       )}
 
-      <Group justify="space-between" mb="md">
-        <Text size="xl" fw={700}>Tag Management</Text>
+      <Group position="apart" mb="md">
+        <Text size="xl" weight={700}>Tag Management</Text>
         <Button
-          leftSection={<IconPlus size={16} />}
+          leftIcon={<IconPlus size={16} />}
           onClick={() => setCreateModalOpen(true)}
         >
           Create Tag
@@ -231,19 +230,19 @@ const TagManager: React.FC = () => {
         placeholder="Search tags..."
         value={searchTerm}
         onChange={(event) => setSearchTerm(event.currentTarget.value)}
-        leftSection={<IconSearch size={16} />}
+        icon={<IconSearch size={16} />}
         mb="md"
       />
 
-      <ScrollArea h={400}>
+      <ScrollArea style={{ height: 400 }}>
         <Stack>
           {filteredTags.map((tag) => (
             <Card key={tag.id} shadow="sm" padding="md" withBorder>
-              <Group justify="space-between" align="flex-start">
+              <Group position="apart" align="flex-start">
                 <Box style={{ flex: 1 }}>
                   <Group mb="xs">
                     <IconTag size={16} />
-                    <Text fw={500}>{getTagHierarchy(tag)}</Text>
+                    <Text weight={500}>{getTagHierarchy(tag)}</Text>
                   </Group>
                   
                   {tag.parent_tag && (
@@ -253,8 +252,8 @@ const TagManager: React.FC = () => {
                   )}
                   
                   {getChildTags(tag.id).length > 0 && (
-                    <Group gap="xs" mb="xs">
-                      <Text size="sm" c="dimmed">Children:</Text>
+                    <Group spacing="xs" mb="xs">
+                      <Text size="sm" color="dimmed">Children:</Text>
                       {getChildTags(tag.id).map((childTag) => (
                         <Badge key={childTag.id} variant="outline" size="sm">
                           {childTag.name}
@@ -263,7 +262,7 @@ const TagManager: React.FC = () => {
                     </Group>
                   )}
                   
-                  <Text size="xs" c="dimmed">
+                  <Text size="xs" color="dimmed">
                     Created: {new Date(tag.created_at).toLocaleDateString()}
                   </Text>
                 </Box>
@@ -288,7 +287,7 @@ const TagManager: React.FC = () => {
           ))}
           
           {filteredTags.length === 0 && (
-            <Text c="dimmed" ta="center" py="xl">
+            <Text color="dimmed" align="center" py="xl">
               No tags found
             </Text>
           )}
@@ -323,7 +322,7 @@ const TagManager: React.FC = () => {
             clearable
           />
           
-          <Group justify="flex-end">
+          <Group position="right">
             <Button
               variant="default"
               onClick={() => {
@@ -369,7 +368,7 @@ const TagManager: React.FC = () => {
             clearable
           />
           
-          <Group justify="flex-end">
+          <Group position="right">
             <Button
               variant="default"
               onClick={() => {

@@ -11,6 +11,16 @@ export interface KjvBook {
   book_name: string;
 }
 
+// Add interface for ESV API response
+interface EsvVerse {
+  verse: number;
+  text: string;
+}
+
+interface EsvApiResponse {
+  verses: EsvVerse[];
+}
+
 export const getBooks = (): { book_name: string; book_id: string }[] => {
   const set = new Set<string>();
   data.map((book: KjvBook) => {
@@ -86,10 +96,10 @@ export const getVersesInEsvChapter = async (
       },
     });
 
-    const data = await response.json();
+    const data: EsvApiResponse = await response.json();
 
-    const verses = data.verses
-  return Promise.resolve(verses.map((verse) => ({ verse: verse.verse, text: verse.text })));
+    const verses = data.verses;
+    return verses.map((verse: EsvVerse) => ({ verse: verse.verse, text: verse.text }));
   } catch (error) {
     console.error(error);
     throw error;

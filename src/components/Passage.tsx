@@ -5,12 +5,20 @@ import { useState, useEffect, useRef } from "react";
 import SubHeader from "./SubHeader";
 import Verse from "./Verse";
 
-const Passage = ({ open }: { open: () => void  }) => {
+
+type VerseType = {
+  verse: number;
+  text: string;
+};
+
+const Passage = ({ open }: { open: () => void }) => {
   const viewport = useRef<HTMLDivElement>(null);
   const activeBook = useBibleStore((state) => state.activeBook);
   const activeChapter = useBibleStore((state) => state.activeChapter);
   const bibleVersion = useBibleStore((state) => state.bibleVersion);
-  const [verses, setVerses] = useState([]);
+  
+
+  const [verses, setVerses] = useState<VerseType[]>([]);
 
   useEffect(() => {
     getVersesInChapter(activeBook, activeChapter, bibleVersion)

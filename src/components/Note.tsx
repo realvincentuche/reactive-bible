@@ -290,10 +290,10 @@ const NoteManager: React.FC = () => {
         </Alert>
       )}
 
-      <Group justify="space-between" mb="md">
+      <Group position="apart" mb="md">
         <Text size="xl" fw={700}>Notes</Text>
         <Button
-          leftSection={<IconPlus size={16} />}
+          leftIcon={<IconPlus size={16} />}
           onClick={() => setCreateModalOpen(true)}
         >
           Create Note
@@ -305,7 +305,7 @@ const NoteManager: React.FC = () => {
           placeholder="Search notes..."
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.currentTarget.value)}
-          leftSection={<IconSearch size={16} />}
+          icon={<IconSearch size={16} />}
           style={{ flex: 1 }}
         />
         <Select
@@ -325,7 +325,7 @@ const NoteManager: React.FC = () => {
         <Stack>
           {filteredNotes.map((note) => (
             <Card key={note.id} shadow="sm" padding="md" withBorder>
-              <Group justify="space-between" align="flex-start">
+              <Group position="apart" align="flex-start">
                 <Box style={{ flex: 1 }}>
                   <Text size="sm" mb="xs">
                     {note.note_text}
@@ -338,7 +338,7 @@ const NoteManager: React.FC = () => {
                   )}
                   
                   {note.verses.length > 0 && (
-                    <Group gap="xs" mb="xs">
+                    <Group spacing="xs" mb="xs">
                       {note.verses.map((verse, index) => (
                         <Badge key={index} variant="outline" size="sm">
                           {verse.book} {verse.chapter}:{verse.verse}
@@ -426,7 +426,7 @@ const NoteManager: React.FC = () => {
             />
           </Group>
           
-          <Group justify="flex-end">
+          <Group position="right">
             <Button
               variant="default"
               onClick={() => {
@@ -497,7 +497,7 @@ const NoteManager: React.FC = () => {
             />
           </Group>
           
-          <Group justify="flex-end">
+          <Group position="right">
             <Button
               variant="default"
               onClick={() => {
