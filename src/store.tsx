@@ -6,11 +6,13 @@ interface BibleState {
   activeBookShort: string;
   activeChapter: number;
   activeVerse: number;
+  bibleVersion: string;
   setActiveBook: (activeBook: string) => void;
   setActiveBookOnly: (activeBook: string) => void;
   setActiveBookShort: (activeBookShort: string) => void;
   setActiveChapter: (activeChapter: number) => void;
   setActiveVerse: (activeVerse: number) => void;
+  setBibleVersion: (bibleVersion: string) => void;
 }
 
 export const useBibleStore = create<BibleState>()(
@@ -20,6 +22,7 @@ export const useBibleStore = create<BibleState>()(
       activeBookShort: "Gen",
       activeChapter: 1,
       activeVerse: 1,
+      bibleVersion: "KJV",
       setActiveBook: (activeBook) => set({ activeBook, activeChapter: 1 }),
       setActiveBookOnly: (activeBook) => set({ activeBook }),
       setActiveBookShort: (activeBookShort) => set({ activeBookShort }),
@@ -30,6 +33,7 @@ export const useBibleStore = create<BibleState>()(
           .getElementById("verse-" + activeVerse)
           ?.scrollIntoView({ block: "center", behavior: "smooth" });
       },
+      setBibleVersion: (bibleVersion) => set({ bibleVersion }),
     }),
     {
       name: "bible-storage",
