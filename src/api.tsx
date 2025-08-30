@@ -2,6 +2,10 @@ import bibleJson from "./assets/kjv.json";
 
 export const data = bibleJson as KjvBook[];
 
+/**
+ * Interface for the locally stored KJV Bible data.
+ * Note: ESV Bible data is not stored locally but fetched from an external API when needed.
+ */
 export interface KjvBook {
   chapter: number;
   verse: number;
