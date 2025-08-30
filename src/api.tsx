@@ -89,8 +89,9 @@ export const getVersesInEsvChapter = async (
     const data = await response.json();
 
     const verses = data.verses
-  return Promise.resolve(verses.map((verse) => ({ verse: verse.verse, text: verse.text })));
-  } catch (error) {
+    return Promise.resolve(verses.map((verse: { verse: number; text: string }) => ({
+      verse: verse.verse, text: verse.text
+    })));  } catch (error) {
     console.error(error);
     throw error;
   }

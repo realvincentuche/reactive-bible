@@ -10,7 +10,7 @@ const Passage = ({ open }: { open: () => void  }) => {
   const activeBook = useBibleStore((state) => state.activeBook);
   const activeChapter = useBibleStore((state) => state.activeChapter);
   const bibleVersion = useBibleStore((state) => state.bibleVersion);
-  const [verses, setVerses] = useState([]);
+  const [verses, setVerses] = useState<{ verse: number; text: string }[]>([]);
 
   useEffect(() => {
     getVersesInChapter(activeBook, activeChapter, bibleVersion)
