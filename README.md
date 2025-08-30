@@ -11,7 +11,10 @@ A Reactive Bible App developed with Reactjs & Mantine. Features include:
 - Offline Bible passages.
 - Online Audio Bible.
 - Book, Chapter & Verse Navigation.
-- Prev & Next Chapter navigation. 
+- Prev & Next Chapter navigation.
+- Available translations:
+    - KJV
+    - ESV
 - Detailed tests included using react testing library and vitest.
 - And lots more.
 
@@ -39,5 +42,14 @@ npm run dev
 # or
 yarn dev
 ```
+
+## Contribution
+1. Fork the repository
+2. Create a new branch
+3. Commit your changes
+4. Ensure all tests pass by running:
+    - `npm run test`
+    - `npm run build`
+4. Create a pull request
 
 Your feedback and contributions are welcome!
