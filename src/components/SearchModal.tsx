@@ -49,7 +49,7 @@ export function SearchModal({
   const setActiveBook = useBibleStore((state) => state.setActiveBook);
   const setActiveBookShort = useBibleStore((state) => state.setActiveBookShort);
   const setActiveChapter = useBibleStore((state) => state.setActiveChapter);
-  const setActiveVerse = useBibleStore((state) => state.setActiveVerse);
+  const setActiveVerses = useBibleStore((state) => state.setActiveVerses);
 
   return (
     <Modal
@@ -82,7 +82,7 @@ export function SearchModal({
           setActiveBook(item.book_name);
           setActiveBookShort(item.book_id);
           setActiveChapter(item.chapter);
-          setActiveVerse(item.verse);
+          setActiveVerses([item.verse]);
           close();
         }}
       />

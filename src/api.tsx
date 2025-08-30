@@ -120,3 +120,29 @@ export const getPassage = (): {
     chapter: number;
   }[];
 };
+
+export const addTagNote = async (
+  tagId: string,
+  tagNoteText: string,
+  verseReferences: { book: string; chapter: number; verse: number }[]
+) => {
+  const body = JSON.stringify({
+    tag: tagId,
+    note_text: tagNoteText,
+    verse_references: verseReferences,
+  })
+
+  try {
+    const response = await fetch('https://bible-research.vercel.app/api/v1/notes/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: body,
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
