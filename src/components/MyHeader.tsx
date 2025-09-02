@@ -12,7 +12,6 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { IconMoonStars, IconSun } from "@tabler/icons-react";
-import { BibleVersionToggle } from './BibleVersionToggle';
 import { SearchControl } from "./SearchControl";
 
 const MyHeader = ({
@@ -66,7 +65,6 @@ const MyHeader = ({
             Reactive Bible
           </Title>
         </Flex>
-        <BibleVersionToggle />
         <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
           <SearchControl onClick={open} />
         </MediaQuery>
