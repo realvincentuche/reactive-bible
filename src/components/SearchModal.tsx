@@ -11,19 +11,9 @@ import {
   SelectItemProps,
 } from "@mantine/core";
 import { useBibleStore } from "../store";
-import { data } from "../api";
-
-
-interface Book {
-  text: string;
-  chapter: number;
-  verse: number;
-  book_id: string;
-  book_name: string;
-}
+import { Book, data } from "../api";
 
 const searchData = data.map((book: Book) => ({ ...book, value: book.text }));
-
 interface ItemProps extends SelectItemProps {
   chapter: number;
   verse: number;
