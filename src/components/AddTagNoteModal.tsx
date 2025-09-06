@@ -64,7 +64,7 @@ const AddTagNoteModal = ({ opened, onClose }: AddTagNoteModalProps) => {
       variant="transparent"
       opened={opened}
       onClose={onClose}
-      title="Add tag to selected verses"
+      title="Add note"
     >
       <form onSubmit={handleSubmit}>
         <Select

@@ -89,7 +89,7 @@ const SubHeader = ({ open }: { open: () => void }) => {
         Notes
       </Button>
       <Button variant="transparent" onClick={() => setOpened(true)}>
-        Tag
+        Add Note
       </Button>
       {opened && (
         <AddTagNoteModal opened={opened} onClose={() => setOpened(false)} />
