@@ -1,11 +1,10 @@
 import { ActionIcon, Box, Title, rem } from "@mantine/core";
-import {
-  IconArrowLeft,
-  IconArrowRight,
-  IconSearch,
-} from "@tabler/icons-react";
+import { IconArrowLeft, IconArrowRight, IconSearch } from "@tabler/icons-react";
+import { Button } from "@mantine/core";
 import { useBibleStore } from "../store";
+import { useState } from "react";
 import { getPassage } from "../api";
+import AddTagNoteModal from "./AddTagNoteModal";
 import Audio from "./Audio";
 
 const SubHeader = ({ open }: { open: () => void }) => {
@@ -16,6 +15,7 @@ const SubHeader = ({ open }: { open: () => void }) => {
   const setActiveBookShort = useBibleStore((state) => state.setActiveBookShort);
   const setActiveChapter = useBibleStore((state) => state.setActiveChapter);
   const getPassageResult = getPassage();
+  const [opened, setOpened] = useState(false);
   const checkNext = (): number | null => {
     const index = getPassageResult.findIndex(
       (book) => book.book_name === activeBook && book.chapter === activeChapter
@@ -77,6 +77,23 @@ const SubHeader = ({ open }: { open: () => void }) => {
       <Title order={4}>
         {activeBookShort} {activeChapter}
       </Title>
+      <Button
+        variant="transparent"
+        onClick={() =>
+          window.open(
+            "https://bible-research.vercel.app/api/v1/notes/",
+            "_blank"
+          )
+        }
+      >
+        Notes
+      </Button>
+      <Button variant="transparent" onClick={() => setOpened(true)}>
+        Add Note
+      </Button>
+      {opened && (
+        <AddTagNoteModal opened={opened} onClose={() => setOpened(false)} />
+      )}
       <Audio />
       <ActionIcon
         variant="transparent"
