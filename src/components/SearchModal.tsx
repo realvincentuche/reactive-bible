@@ -11,9 +11,10 @@ import {
   SelectItemProps,
 } from "@mantine/core";
 import { useBibleStore } from "../store";
-import { Book, data } from "../api";
+import { data } from "../api";
+import { KjvBook } from '../api';
 
-const searchData = data.map((book: Book) => ({ ...book, value: book.text }));
+const searchData = data.map((book: KjvBook) => ({ ...book, value: book.text }));
 interface ItemProps extends SelectItemProps {
   chapter: number;
   verse: number;
@@ -48,7 +49,7 @@ export function SearchModal({
   const setActiveBook = useBibleStore((state) => state.setActiveBook);
   const setActiveBookShort = useBibleStore((state) => state.setActiveBookShort);
   const setActiveChapter = useBibleStore((state) => state.setActiveChapter);
-  const setActiveVerse = useBibleStore((state) => state.setActiveVerse);
+  const setActiveVerses = useBibleStore((state) => state.setActiveVerses);
 
   return (
     <Modal
@@ -81,7 +82,7 @@ export function SearchModal({
           setActiveBook(item.book_name);
           setActiveBookShort(item.book_id);
           setActiveChapter(item.chapter);
-          setActiveVerse(item.verse);
+          setActiveVerses([item.verse]);
           close();
         }}
       />

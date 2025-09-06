@@ -1,8 +1,12 @@
 import bibleJson from "./assets/kjv.json";
 
-export const data = bibleJson as Book[];
+export const data = bibleJson as KjvBook[];
 
-export interface Book {
+/**
+ * Interface for the locally stored KJV Bible data.
+ * Note: ESV Bible data is not stored locally but fetched from an external API when needed.
+ */
+export interface KjvBook {
   chapter: number;
   verse: number;
   text: string;
@@ -13,7 +17,7 @@ export interface Book {
 
 export const getBooks = (): { book_name: string; book_id: string }[] => {
   const set = new Set<string>();
-  data.map((book: Book) => {
+  data.map((book: KjvBook) => {
     const obj = {
       book_name: book.book_name,
       book_id: book.book_id,
@@ -33,8 +37,8 @@ export const getChapters = (thebook: string): number[] => {
   return [
     ...new Set<number>(
       data
-        .filter((book: Book) => book.book_name === thebook)
-        .map((book: Book) => book.chapter)
+        .filter((book: KjvBook) => book.book_name === thebook)
+        .map((book: KjvBook) => book.chapter)
     ),
   ];
 };
@@ -42,20 +46,59 @@ export const getChapters = (thebook: string): number[] => {
 export const getVerses = (thebook: string, thechapter: number): number[] => {
   return data
     .filter(
-      (book: Book) => book.book_name === thebook && book.chapter === thechapter
+      (book: KjvBook) => book.book_name === thebook && book.chapter === thechapter
     )
-    .map((book: Book) => book.verse);
+    .map((book: KjvBook) => book.verse);
 };
 
-export const getVersesInChapter = (
+export const getVersesInChapter = async (
+  thebook: string,
+  thechapter: number,
+  bibleVersion: string
+): Promise<{ verse: number; text: string }[]> => {
+  if (bibleVersion === 'KJV') {
+    return getVersesInKjvChapter(thebook, thechapter);
+  } else if (bibleVersion === 'ESV') {
+    return await getVersesInEsvChapter(thebook, thechapter);
+  } else {
+    throw new Error(`Unsupported Bible version: ${bibleVersion}`);
+  }
+};
+
+export const getVersesInKjvChapter = (
   thebook: string,
   thechapter: number
 ): { verse: number; text: string }[] => {
   return data
     .filter(
-      (book: Book) => book.book_name === thebook && book.chapter === thechapter
+      (book: KjvBook) => book.book_name === thebook && book.chapter === thechapter
     )
-    .map((book: Book) => ({ verse: book.verse, text: book.text }));
+    .map((book: KjvBook) => ({ verse: book.verse, text: book.text }));
+};
+
+export const getVersesInEsvChapter = async (
+  thebook: string,
+  thechapter: number
+): Promise<{ verse: number; text: string }[]> => {
+  try {
+    const passage = `${thebook} ${thechapter}`;
+    const url = `https://tedisrozenfelds.vercel.app/bible/verses?passage=${passage}`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+
+    const verses = data.verses
+    return Promise.resolve(verses.map((verse: { verse: number; text: string }) => ({
+      verse: verse.verse, text: verse.text
+    })));  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 export const getPassage = (): {
@@ -64,7 +107,7 @@ export const getPassage = (): {
   chapter: number;
 }[] => {
   const set = new Set<string>();
-  data.map((book: Book) => {
+  data.map((book: KjvBook) => {
     const obj = {
       book_name: book.book_name,
       book_id: book.book_id,
@@ -80,4 +123,30 @@ export const getPassage = (): {
     book_id: string;
     chapter: number;
   }[];
+};
+
+export const addTagNote = async (
+  tagId: string,
+  tagNoteText: string,
+  verseReferences: { book: string; chapter: number; verse: number }[]
+) => {
+  const body = JSON.stringify({
+    tag: tagId,
+    note_text: tagNoteText,
+    verse_references: verseReferences,
+  })
+
+  try {
+    const response = await fetch('https://bible-research.vercel.app/api/v1/notes/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: body,
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
 };
